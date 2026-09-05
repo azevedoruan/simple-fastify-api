@@ -1,0 +1,44 @@
+import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import z from 'zod'
+import bcrypt from 'bcryptjs'
+import { db } from '../drizzle/client.js'
+import { eq } from 'drizzle-orm'
+import { users } from '../drizzle/schema/users.js'
+import { ClientError } from '../errors/client-error.js'
+
+export const registerRoute: FastifyPluginAsyncZod = async app => {
+    app.post(
+        '/auth/register',
+        {
+            schema: {
+                summary: 'Register a new user',
+                tags: ["Auth"],
+                body: z.object({
+                    name: z.string().min(2),
+                    email: z.email(),
+                    password: z.string().min(8)
+                }),
+                response: {
+                    201: z.object({
+                        userId: z.string()
+                    })
+                }
+            }
+        },
+        async (request, reply) => {
+            const { name, email, password } = request.body
+
+            const existingUser = await db.query.users.findFirst({
+                where: eq(users.email, email)
+            })
+
+            if (existingUser) {
+                throw new ClientError('Email already in use')
+            }
+
+            const passwordHash = await bcrypt.hash(password, 10)
+
+            
+        }
+    )
+}
