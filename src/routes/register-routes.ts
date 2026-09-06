@@ -38,7 +38,21 @@ export const registerRoute: FastifyPluginAsyncZod = async app => {
 
             const passwordHash = await bcrypt.hash(password, 10)
 
-            
+            const [user] = await db
+                .insert(users)
+                .values({
+                    name,
+                    email,
+                    passwordHash
+                }).returning({
+                    id: users.id
+                })
+
+            return reply
+                .status(201)
+                .send({
+                    userId: user.id
+                })
         }
     )
 }
