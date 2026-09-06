@@ -6,6 +6,10 @@ import { eq } from 'drizzle-orm'
 import { users } from '../drizzle/schema/users.js'
 import { ClientError } from '../errors/client-error.js'
 
+/*
+    This work like the controller layer in another languages.
+*/
+
 export const registerRoute: FastifyPluginAsyncZod = async app => {
     app.post(
         '/auth/register',
