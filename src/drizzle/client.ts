@@ -3,7 +3,7 @@ import { env } from "../config/env.js";
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { users } from './schema/users.js';
 
-export const pg = postgres(env.POSTGRES_URL)
+export const pg = postgres(env.DATABASE_URL)
 
 export const db = drizzle(pg, {
     schema: {

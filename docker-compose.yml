@@ -1,9 +1,9 @@
 services:
   service-pg:
-    image: postgres:lastest
+    image: postgres:latest
     ports:
-      -"5432:5432"
+      - '5432:5432'
     environment:
-      - POSTGRES_USER=postgresuser
-      - POSTGRES_PASSWORD=postgrespwd
-      - POSTGRES_DB=postgresdb
+      - POSTGRES_USER=postuser
+      - POSTGRES_PASSWORD=postpwd
+      - POSTGRES_DB=postdb

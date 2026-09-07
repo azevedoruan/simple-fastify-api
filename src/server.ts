@@ -40,8 +40,9 @@ app.register(loginRoute);
 
 // Entry point
 app.listen({
-    port: env.PORT,
+    port: env.DB_PORT,
     host: '0.0.0.0'
 }).then(() => {
-    console.log("Server is running on port " + env.PORT)
+    console.log("Server is running on port " + env.DB_PORT);
+    console.log("http://localhost:" + env.DB_PORT + "/docs");
 });
